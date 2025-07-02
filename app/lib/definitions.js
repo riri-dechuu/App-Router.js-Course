@@ -1,88 +1,93 @@
-// This file contains type definitions for your data.
-// It describes the shape of the data, and what data type each property should accept.
-// For simplicity of teaching, we're manually defining these types.
-// However, these types are generated automatically if you're using an ORM such as Prisma.
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
+// This file describes example data shapes used across the app.
+
+// Example of what a user object might look like
+export const User = {
+  id: '',
+  name: '',
+  email: '',
+  password: '',
 };
 
-export type Customer = {
-  id: string;
-  name: string;
-  email: string;
-  image_url: string;
+// Customer object shape
+export const Customer = {
+  id: '',
+  name: '',
+  email: '',
+  image_url: '',
 };
 
-export type Invoice = {
-  id: string;
-  customer_id: string;
-  amount: number;
-  date: string;
-  // In TypeScript, this is called a string union type.
-  // It means that the "status" property can only be one of the two strings: 'pending' or 'paid'.
-  status: 'pending' | 'paid';
+// Invoice object shape
+export const Invoice = {
+  id: '',
+  customer_id: '',
+  amount: 0,
+  date: '',
+  status: 'pending', // or 'paid'
 };
 
-export type Revenue = {
-  month: string;
-  revenue: number;
+// Revenue object shape
+export const Revenue = {
+  month: '',
+  revenue: 0,
 };
 
-export type LatestInvoice = {
-  id: string;
-  name: string;
-  image_url: string;
-  email: string;
-  amount: string;
+// Latest invoice with formatted amount
+export const LatestInvoice = {
+  id: '',
+  name: '',
+  image_url: '',
+  email: '',
+  amount: '', // formatted as a string
 };
 
-// The database returns a number for amount, but we later format it to a string with the formatCurrency function
-export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
-  amount: number;
+// This was a TypeScript type. In JS, just define as comment or object shape.
+export const LatestInvoiceRawExample = {
+  id: '',
+  name: '',
+  image_url: '',
+  email: '',
+  amount: 0, // this is before formatting
 };
 
-export type InvoicesTable = {
-  id: string;
-  customer_id: string;
-  name: string;
-  email: string;
-  image_url: string;
-  date: string;
-  amount: number;
-  status: 'pending' | 'paid';
+export const InvoicesTable = {
+  id: '',
+  customer_id: '',
+  name: '',
+  email: '',
+  image_url: '',
+  date: '',
+  amount: 0,
+  status: 'pending',
 };
 
-export type CustomersTableType = {
-  id: string;
-  name: string;
-  email: string;
-  image_url: string;
-  total_invoices: number;
-  total_pending: number;
-  total_paid: number;
+export const CustomersTableExample = {
+  id: '',
+  name: '',
+  email: '',
+  image_url: '',
+  total_invoices: 0,
+  total_pending: 0,
+  total_paid: 0,
 };
 
-export type FormattedCustomersTable = {
-  id: string;
-  name: string;
-  email: string;
-  image_url: string;
-  total_invoices: number;
-  total_pending: string;
-  total_paid: string;
+export const FormattedCustomersTable = {
+  id: '',
+  name: '',
+  email: '',
+  image_url: '',
+  total_invoices: 0,
+  total_pending: '', // formatted as string
+  total_paid: '', // formatted as string
 };
 
-export type CustomerField = {
-  id: string;
-  name: string;
+export const CustomerField = {
+  id: '',
+  name: '',
 };
 
-export type InvoiceForm = {
-  id: string;
-  customer_id: string;
-  amount: number;
-  status: 'pending' | 'paid';
+export const InvoiceForm = {
+  id: '',
+  customer_id: '',
+  amount: 0,
+  status: 'pending',
 };
