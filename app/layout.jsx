@@ -1,5 +1,6 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
+import DotLoadingBar from '@/app/ui/dot-loading-bar';
 
     
 export const metadata = {
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
+        <DotLoadingBar />
         {children}
       </body>
     </html>

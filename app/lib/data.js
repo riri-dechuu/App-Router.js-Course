@@ -156,6 +156,7 @@ export async function fetchInvoiceById(id) {
     throw new Error('Failed to fetch invoice by ID.');
   }
 }
+
 export async function fetchCustomers() {
   try {
     const customers = await sql`
