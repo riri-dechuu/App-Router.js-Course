@@ -6,14 +6,17 @@ import { fetchLatestInvoices } from '@/app/lib/data';
 
 export default async function LatestInvoices() {
   const latestInvoices = await fetchLatestInvoices();
+
+  if (!latestInvoices || latestInvoices.length === 0) {
+    return <p className="mt-4 text-gray-400">No latest invoices available.</p>;
+  }
+
   return (
     <div className="flex w-full flex-col md:col-span-4">
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
         Latest Invoices
       </h2>
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
-        {/* NOTE: Uncomment this code in Chapter 7 */}
-
         <div className="bg-white px-6">
           {latestInvoices.map((invoice, i) => {
             return (
