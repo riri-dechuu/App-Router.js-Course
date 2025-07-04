@@ -1,7 +1,9 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
-import DotLoadingBar from '@/app/ui/dot-loading-bar';
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 
+const DotLoadingBar = dynamic(() => import('@/app/ui/dot-loading-bar'), { ssr: false });
     
 export const metadata = {
   title: {
@@ -16,7 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <DotLoadingBar />
+        <Suspense fallback={null}>
+          <DotLoadingBar />
+        </Suspense>
         {children}
       </body>
     </html>
