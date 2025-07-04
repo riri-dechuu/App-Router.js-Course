@@ -30,7 +30,6 @@ async function seedUsers() {
 }
 
 async function seedInvoices() {
-  // Optional: Clear the invoices table before inserting
   await sql`DELETE FROM invoices`;
 
   await sql`
