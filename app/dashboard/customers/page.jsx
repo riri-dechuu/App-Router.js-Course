@@ -8,3 +8,7 @@ export default function Page() {
       </h1>
     );
   }
+
+  export const metadata = {
+  title: 'Customers',
+};

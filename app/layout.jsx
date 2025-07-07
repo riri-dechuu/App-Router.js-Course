@@ -1,6 +1,6 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
-import BouncyLoadingBar from '@/app/ui/bouncy-loading-bar';
+import NextTopLoader from 'nextjs-toploader';
     
 export const metadata = {
   title: {
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <BouncyLoadingBar />
+        <NextTopLoader color="#29d" initialPosition={0.08} crawlSpeed={200} height={3} crawl={true} showSpinner={false} easing="ease" speed={200} shadow="0 0 10px #29d,0 0 5px #29d" />
         {children}
       </body>
     </html>
