@@ -1,3 +1,4 @@
+// auth.js
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
@@ -54,9 +55,28 @@ export const { auth, signIn, signOut } = NextAuth({
           return null;
         }
 
-        // All checks pass
+        // All checks pass - return the user object (NextAuth.js will use this to create the session)
         return user;
       },
     }),
   ],
+  // --- ADD THESE CALLBACKS ---
+  callbacks: {
+    async jwt({ token, user }) {
+      // Add user ID to the token if it exists (on initial sign-in)
+      if (user) {
+        token.id = user.id; // Assuming your user object from getUser has an 'id' property
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Add user ID from the token to the session object
+      // This is what `auth()` in your components will receive
+      if (token.id) {
+        session.user.id = token.id;
+      }
+      return session;
+    },
+  },
+  // --- END OF CALLBACKS ---
 });

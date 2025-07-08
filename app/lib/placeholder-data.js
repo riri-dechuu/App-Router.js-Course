@@ -1,9 +1,11 @@
+// app/lib/placeholder-data.js
+
 const users = [
   {
-    id: '410544b2-4001-4271-9855-fec4b6a6442a',
+    id: '410544b2-4001-4271-9855-fec4b6a6442a', // This is the ID for 'user@nextmail.com'
     name: 'User',
     email: 'user@nextmail.com',
-    password: '123456',
+    password: '123456', // IMPORTANT: Never use plain text passwords in production! This is for mock data only.
   },
 ];
 
@@ -142,4 +144,54 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
-export { users, customers, invoices, revenue };
+// --- ADD THIS NEW ARRAY FOR TICKETS ---
+const tickets = [
+  {
+    id: 'a1b2c3d4-e5f6-7890-1234-56789abcdef0',
+    user_id: users[0].id, // Linked to the first user in the `users` array
+    subject: 'Login Issue on Mobile',
+    description: 'Cannot log into the dashboard using my mobile phone browser (Safari). Works on desktop.',
+    status: 'Open',
+    created_at: '2024-06-01T10:00:00Z',
+    updated_at: '2024-06-01T10:00:00Z',
+  },
+  {
+    id: 'b1c2d3e4-f5a6-7890-1234-56789abcdef1',
+    user_id: users[0].id, // Linked to the first user
+    subject: 'Feature Request: Dark Mode',
+    description: 'Requesting a dark mode toggle for the dashboard interface for better night viewing.',
+    status: 'In Progress',
+    created_at: '2024-05-15T14:30:00Z',
+    updated_at: '2024-07-07T09:15:00Z', // Updated recently
+  },
+  {
+    id: 'c1d2e3f4-a5b6-7890-1234-56789abcdef2',
+    user_id: users[0].id, // Linked to the first user
+    subject: 'Report Generation Error',
+    description: 'PDF generation fails for invoices spanning more than 3 months. Error code: 500.',
+    status: 'On Hold', // Example status
+    created_at: '2024-04-20T11:45:00Z',
+    updated_at: '2024-05-01T16:00:00Z',
+  },
+  {
+    id: 'd1e2f3g4-h5i6-7890-1234-56789abcdef3',
+    user_id: users[0].id, // Linked to the first user
+    subject: 'Password Reset Not Working',
+    description: 'Clicked password reset link, but it expired immediately. Tried multiple times.',
+    status: 'Resolved', // Example status
+    created_at: '2024-03-10T08:00:00Z',
+    updated_at: '2024-03-12T17:00:00Z',
+  },
+  {
+    id: 'e1f2g3h4-i5j6-7890-1234-56789abcdef4',
+    user_id: users[0].id, // Linked to the first user
+    subject: 'Old Ticket - Closed',
+    description: 'This is an example of a previously closed ticket.',
+    status: 'Closed', // Example status
+    created_at: '2023-11-01T09:00:00Z',
+    updated_at: '2023-11-05T10:00:00Z',
+  },
+];
+
+
+export { users, customers, invoices, revenue, tickets }; // <--- ADD 'tickets' to the export list

@@ -1,9 +1,12 @@
+// app/ui/dashboard/nav-links.jsx
 'use client';
 
 import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  TagIcon, // <--- ADD THIS IMPORT for a new icon
+  // Or if you prefer a different one like TicketIcon, you'd import it here
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -17,6 +20,8 @@ const links = [
     icon: DocumentDuplicateIcon,
   },
   { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+  // --- ADD THIS NEW LINK FOR TICKETS ---
+  { name: 'My Tickets', href: '/dashboard/tickets', icon: TagIcon },
 ];
 
 export default function NavLinks() {

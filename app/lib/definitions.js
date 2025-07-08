@@ -1,3 +1,4 @@
+// app/lib/definitions.js
 // This file describes example data shapes used across the app.
 
 // Example of what a user object might look like
@@ -90,4 +91,15 @@ export const InvoiceForm = {
   customer_id: '',
   amount: 0,
   status: 'pending',
+};
+
+// --- ADD THIS NEW OBJECT FOR TICKET ---
+export const Ticket = {
+  id: '',
+  user_id: '',
+  subject: '',
+  description: '',
+  status: 'Open', // 'Open', 'In Progress', 'On Hold', 'Resolved', 'Closed'
+  created_at: '',
+  updated_at: '',
 };

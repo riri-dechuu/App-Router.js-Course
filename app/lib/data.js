@@ -1,15 +1,17 @@
+// app/lib/data.js
 import { sql } from '@vercel/postgres';
-import { formatCurrency } from './utils'; 
+import { formatCurrency } from './utils';
+import { unstable_noStore as noStore } from 'next/cache'; // <--- ADD THIS IMPORT
 
 const ITEMS_PER_PAGE = 6;
 
 export async function fetchRevenue() {
   try {
     const data = await sql`SELECT * FROM revenue`;
-    
+
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    return data.rows; 
+    return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch revenue data.');
@@ -26,7 +28,7 @@ export async function fetchLatestInvoices() {
       ORDER BY invoices.date DESC
       LIMIT 5`;
 
-    const latestInvoices = data.rows.map((invoice) => ({ 
+    const latestInvoices = data.rows.map((invoice) => ({
       ...invoice,
       amount: formatCurrency(invoice.amount),
     }));
@@ -42,9 +44,9 @@ export async function fetchCardData() {
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
-               SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-               SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
-             FROM invoices`;
+              SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+              SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+            FROM invoices`;
 
     const [invoiceCount, customerCount, invoiceStatus] = await Promise.all([
       invoiceCountPromise,
@@ -146,12 +148,10 @@ export async function fetchInvoiceById(id) {
     return invoice[0] || null;
   } catch (error) {
     // Check if the error is a NeonDbError with code '22P02' (invalid text representation)
-    // This typically indicates an invalid UUID format.
     if (error && typeof error === 'object' && 'code' in error && error.code === '22P02') {
       console.error('Database Error: Invalid UUID format for invoice ID.', error);
-      return null; // Return null so that notFound() is triggered in the page component
+      return null;
     }
-    // For other database errors, log and re-throw (or handle as needed)
     console.error('Database Error: Failed to fetch invoice by ID.', error);
     throw new Error('Failed to fetch invoice by ID.');
   }
@@ -172,6 +172,7 @@ export async function fetchCustomers() {
     throw new Error('Failed to fetch all customers.');
   }
 }
+
 export async function fetchFilteredCustomers(query) {
   try {
     const data = await sql`
@@ -202,5 +203,45 @@ export async function fetchFilteredCustomers(query) {
   } catch (err) {
     console.error('Database Error: Failed to fetch customer table.', err);
     throw new Error('Failed to fetch customer table.');
+  }
+}
+
+// --- ADD THESE NEW FUNCTIONS FOR TICKETS ---
+export async function fetchTicketsByUserId(userId) {
+  noStore(); // Prevents this function from being cached, ensuring fresh data on each call
+
+  try {
+    const data = await sql`
+      SELECT
+        id,
+        user_id,
+        subject,
+        description,
+        status,
+        created_at,
+        updated_at
+      FROM tickets
+      WHERE user_id = ${userId}
+      ORDER BY created_at DESC;
+    `;
+
+    return data.rows; // Returns an array of ticket objects
+
+  } catch (error) {
+    console.error('Database Error: Failed to fetch tickets by user ID.', error);
+    throw new Error('Failed to fetch tickets.');
+  }
+}
+
+export async function fetchTicketById(ticketId) {
+  noStore();
+  try {
+    const data = await sql`
+      SELECT * FROM tickets WHERE id = ${ticketId};
+    `;
+    return data.rows[0]; // Return the first (and only) ticket
+  } catch (error) {
+    console.error('Database Error: Failed to fetch ticket by ID.', error);
+    throw new Error('Failed to fetch single ticket.');
   }
 }
